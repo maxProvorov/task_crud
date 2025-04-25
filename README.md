@@ -9,6 +9,11 @@
 GET /api/tasks
 ```
 
+### Получить одну задачу
+```http
+GET /api/tasks/1
+```
+
 ### Создать задачу
 ```http
 POST /api/tasks
@@ -23,7 +28,7 @@ Content-Type: application/json
 
 ### Обновить задачу
 ```http
-PATCH /api/tasks/1
+PUT /api/tasks/1
 Content-Type: application/json
 
 {
