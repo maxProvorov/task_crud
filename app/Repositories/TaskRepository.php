@@ -8,31 +8,38 @@ use App\Models\Task;
 
 class TaskRepository
 {
-    public function all()
+    public function all(int $userId)
     {
-        return Task::all();
+        return Task::with('tags')->where('user_id', $userId)->get();
     }
 
-    public function create(TaskDto $dto): Task
+    public function create(TaskDto $dto, int $userId): Task
     {
-        return Task::create($dto->toArray());
+        $task = Task::create(array_merge($dto->toArray(), ['user_id' => $userId]));
+
+        if($dto->tags) {
+            $task->tags()->sync($dto->tags);
+        }
+
+        return $task->load('tags');
     }
 
-    public function find(int $id): Task
+    public function find(int $id, int $userId): Task
     {
-        return Task::findOrFail($id);
+        return Task::with('tags')->where('user_id', $userId)->findOrFail($id);
     }
 
-    public function update(UpdateTaskDTO $dto, int $id): Task
+    public function update(UpdateTaskDTO $dto, int $id, int $userId): Task
     {
         $task = Task::findOrFail($id);
-        $task->update($dto->toArray());
+        $task->update(array_merge($dto->toArray(), ['user_id' => $userId]));
 
-        return $task;
+        return $task->load('tags');
     }
 
-    public function destroy(int $id): bool
+    public function destroy(int $id, int $userId): bool
     {
-        return Task::destroy($id);
+        $task = Task::where('id', $id)->where('user_id', $userId)->firstOrFail();
+        return (bool) $task->delete();
     }
 }

@@ -15,42 +15,52 @@ class TaskController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json($this->service->getAll(), 200);
+        $userId = auth()->id();
+        $userId = 1;
+        return response()->json($this->service->getAll($userId), 200);
     }
 
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required',
+            'title' => 'required|string|min:3|max:20',
+            'text' => 'nullable|string|max:200',
+            'tags' => 'array',
         ]);
 
         $dto = TaskDto::fromArray($validated);
-        $task = $this->service->createTask($dto);
+        //$userId = auth()->id();
+        $userId = 1;
+        $task = $this->service->createTask($dto, $userId);
         return response()->json($task, 200);
     }
 
     public function show(int $id): JsonResponse
     {
-        return response()->json($this->service->getTaskById($id), 200);
+        $userId = auth()->id();
+        $userId = 1;
+        return response()->json($this->service->getTaskById($id, $userId), 200);
     }
 
     public function update(Request $request, int $id): JsonResponse
     {
         $validated = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'sometimes|required|in:pending,completed',
+            'title' => 'sometimes|required|string|min:3|max:20',
+            'text' => 'sometimes|nullable|string|max:200',
+            'tags' => 'sometimes|array',
         ]);
 
         $dto = UpdateTaskDTO::fromArray($validated);
-        $task = $this->service->updateTask($dto, $id);
+        $userId = auth()->id();
+        $userId = 1;
+        $task = $this->service->updateTask($dto, $id, $userId);
         return response()->json($task, 200);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        return response()->json($this->service->destroyTaskById($id), 200);
+        $userId = auth()->id();
+        $userId = 1;
+        return response()->json($this->service->destroyTaskById($id, $userId), 200);
     }
 }

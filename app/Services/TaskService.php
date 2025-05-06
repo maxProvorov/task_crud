@@ -12,28 +12,28 @@ class TaskService
     public function __construct(protected TaskRepository $repository)
     {}
 
-    public function getAll()
+    public function getAll(int $userId)
     {
-        return $this->repository->all();
+        return $this->repository->all($userId);
     }
 
-    public function createTask(TaskDto $dto): Task
+    public function createTask(TaskDto $dto, int $userId): Task
     {
-        return $this->repository->create($dto);
+        return $this->repository->create($dto, $userId);
     }
 
-    public function getTaskById(int $id): Task
+    public function getTaskById(int $id, int $userId): Task
     {
-        return $this->repository->find($id);
+        return $this->repository->find($id, $userId);
     }
 
-    public function updateTask(UpdateTaskDTO $dto, int $id): Task
+    public function updateTask(UpdateTaskDTO $dto, int $id, int $userId): Task
     {
-        return $this->repository->update($dto, $id);
+        return $this->repository->update($dto, $id, $userId);
     }
 
-    public function destroyTaskById(int $id): bool
+    public function destroyTaskById(int $id, int $userId): bool
     {
-        return $this->repository->destroy($id);
+        return $this->repository->destroy($id, $userId);
     }
 }

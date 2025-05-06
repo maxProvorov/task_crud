@@ -6,8 +6,8 @@ class UpdateTaskDTO
 {
     public function __construct(
         public readonly ?string $title = null,
-        public readonly ?string $description = null,
-        public readonly ?string $status = null,
+        public readonly ?string $text = null,
+        public ?array $tags = null,
     )
     {}
 
@@ -15,8 +15,8 @@ class UpdateTaskDTO
     {
         return new self(
             title: $data['title'] ?? null,
-            description: $data['description'] ?? null,
-            status: $data['status'] ?? null,
+            text: $data['text'] ?? null,
+            tags: $data['tags'] ?? null,
         );
     }
 
@@ -24,8 +24,8 @@ class UpdateTaskDTO
     {
         return array_filter([
             'title' => $this->title,
-            'description' => $this->description,
-            'status' => $this->status,
+            'text' => $this->text,
+            'tags' => $this->tags,
         ], fn ($value) => !is_null($value));
     }
 }

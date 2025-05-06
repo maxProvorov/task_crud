@@ -5,9 +5,9 @@ namespace App\DTOs;
 class TaskDTO
 {
     public function __construct(
-        private string $title,
-        private ?string $description = null,
-        private string $status = 'pending',
+        public string $title,
+        public ?string $text = null,
+        public ?array $tags = null,
     )
     {}
 
@@ -15,8 +15,8 @@ class TaskDTO
     {
         return new self(
             title: $data['title'],
-            description: $data['description'] ?? null,
-            status: $data['status'] ?? 'pending',
+            text: $data['text'] ?? null,
+            tags: $data['tags'] ?? null
         );
     }
 
@@ -24,8 +24,8 @@ class TaskDTO
     {
         return [
             'title' => $this->title,
-            'description' => $this->description,
-            'status' => $this->status,
+            'text' => $this->text,
+            'tags' => $this->tags,
         ];
     }
 }

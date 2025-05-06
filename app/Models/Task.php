@@ -3,14 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
-    protected $fillable = ['title', 'description', 'status'];
+    protected $fillable = ['user_id', 'title', 'text'];
 
-    protected $rules = [
-        'title' => 'sometimes|required|max:255',
-        'description' => 'sometimes|nullable|string',
-        'status' => 'sometimes|required',
-    ];
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
