@@ -1,42 +1,117 @@
-# Task Manager API
+# To Do List API
 
-Простой CRUD на Laravel
+A simple to do list API built with Laravel.
 
-## 📮 Примеры запросов
+## 🔐 Authentication
 
-### Получить все задачи
+All routes require authentication via a Bearer token.
+
+### Register
+```http
+POST /api/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+```
+
+### Login
+```http
+POST /api/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password"
+}
+```
+
+The response includes `api_token`. Use it in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_API_TOKEN
+```
+
+---
+
+## ✅ Tasks
+
+### Get All Tasks
 ```http
 GET /api/tasks
 ```
 
-### Получить одну задачу
+### Get a Single Task
 ```http
 GET /api/tasks/1
 ```
 
-### Создать задачу
+### Create a Task
 ```http
 POST /api/tasks
 Content-Type: application/json
 
 {
-  "title": "Новая задача",
-  "description": "Описание задачи",
-  "status": "pending"
+  "title": "New Task",
+  "text": "Task description",
+  "tags": [1, 2]
 }
 ```
 
-### Обновить задачу
+### Update a Task
 ```http
-PUT /api/tasks/1
+PATCH /api/tasks/1
 Content-Type: application/json
 
 {
-  "title": "Обновлённая задача"
+  "title": "Updated Title",
+  "tags": [3]
 }
 ```
 
-### Удалить задачу
+### Delete a Task
 ```http
 DELETE /api/tasks/1
+```
+
+---
+
+## 🏷️ Tags
+
+### Get All Tags
+```http
+GET /api/tags
+```
+
+### Create a Tag
+```http
+POST /api/tags
+Content-Type: application/json
+
+{
+  "title": "Urgent"
+}
+```
+
+### Get a Tag
+```http
+GET /api/tags/1
+```
+### Update a Tag
+```http
+PATCH /api/tags/1
+Content-Type: application/json
+
+{
+  "title": "Urgent"
+}
+```
+
+### Delete a Tag
+```http
+DELETE /api/tags/1
 ```
