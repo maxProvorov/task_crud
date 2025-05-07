@@ -5,8 +5,8 @@ namespace App\DTOs;
 class UpdateTaskDTO
 {
     public function __construct(
-        public readonly ?string $title = null,
-        public readonly ?string $text = null,
+        public ?string $title = null,
+        public ?string $text = null,
         public ?array $tags = null,
     )
     {}

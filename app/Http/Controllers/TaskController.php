@@ -16,7 +16,6 @@ class TaskController extends Controller
     public function index(): JsonResponse
     {
         $userId = auth()->id();
-        $userId = 1;
         return response()->json($this->service->getAll($userId), 200);
     }
 
@@ -29,8 +28,7 @@ class TaskController extends Controller
         ]);
 
         $dto = TaskDto::fromArray($validated);
-        //$userId = auth()->id();
-        $userId = 1;
+        $userId = auth()->id();
         $task = $this->service->createTask($dto, $userId);
         return response()->json($task, 200);
     }
@@ -38,7 +36,6 @@ class TaskController extends Controller
     public function show(int $id): JsonResponse
     {
         $userId = auth()->id();
-        $userId = 1;
         return response()->json($this->service->getTaskById($id, $userId), 200);
     }
 
@@ -52,7 +49,6 @@ class TaskController extends Controller
 
         $dto = UpdateTaskDTO::fromArray($validated);
         $userId = auth()->id();
-        $userId = 1;
         $task = $this->service->updateTask($dto, $id, $userId);
         return response()->json($task, 200);
     }
@@ -60,7 +56,6 @@ class TaskController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $userId = auth()->id();
-        $userId = 1;
         return response()->json($this->service->destroyTaskById($id, $userId), 200);
     }
 }
