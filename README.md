@@ -115,3 +115,45 @@ Content-Type: application/json
 ```http
 DELETE /api/tags/1
 ```
+## Test API via cURL
+
+### 1. Register a User
+
+```bash
+curl -X POST http://localhost:8000/api/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "password",
+    "password_confirmation": "password"
+  }'
+```
+
+### 2. Obtain a Token (Login)
+```bash
+curl -X POST http://localhost:8000/api/login \
+-H "Content-Type: application/json" \
+-d '{
+"email": "test@example.com",
+"password": "password"
+}'
+```
+### 3. Get List of Tasks
+```bash
+curl -X GET http://localhost:8000/api/tasks \
+  -H "Authorization: Bearer your_token" \
+  -H "Accept: application/json"
+```
+
+### 4. Create a New Task
+```bash
+curl -X POST http://localhost:8000/api/tasks \
+  -H "Authorization: Bearer your_token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "New Task",
+    "description": "Task description",
+    "status": "pending"
+  }'
+```
